@@ -1,0 +1,36 @@
+# Whole pipeline in minutes. CPU-safe. Used as the gate before any long run.
+name: smoke
+seed: 17
+data:
+  root: data/DIV2K
+  severity: moderate
+  val_pairs: 8
+  max_train_images: 6
+tools:
+  epochs: 1
+  steps_per_epoch: 30
+  batch_size: 8
+  lr: 0.1
+  lr_drop_every: 5
+  lr_drop_factor: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+  grad_clip_norm: 0.4
+  robust_extras: true
+  optimizer: sgd
+# stability_spec §2 smoke agent config
+agent:
+  env_steps: 5000
+  warmup_steps: 500
+  replay_capacity: 10000
+  batch_episodes: 8
+  train_every: 4  # not in stability spec; kept consistent with full.yaml
+  target_sync_every: 500
+  chunk_size: 1000
+  eval_pairs: 32
+  epsilon_end: 0.5
+  epsilon_anneal_steps: 4000
+  lr: 1.0e-4
+  gamma: 0.99
+  use_double_dqn: true  # F1 applied: representativeness — smoke now exercises Double DQN path (vanilla for ablation via configs/full.yaml override)
+  grad_clip_norm: 5.0  # F5 applied 2026-06-12: grad_norm_ema grew 0.56->44 by 550k steps unclipped (null = paper-faithful ablation)

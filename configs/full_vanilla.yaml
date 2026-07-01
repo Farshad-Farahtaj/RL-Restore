@@ -1,0 +1,38 @@
+# Vanilla-DQN ablation (P3.E3). IDENTICAL to full.yaml except use_double_dqn:
+# false — isolates the value of the F1 Double-DQN change. Same seed, same tools
+# (loaded via --tools-name full), same grad clip, same 2M steps. Run into a
+# SEPARATE out-dir (agent_vanilla) so it never collides with the v2 result.
+name: full
+seed: 17
+data:
+  root: data/DIV2K
+  severity: moderate
+  val_pairs: 256
+  max_train_images: 0          # all 750
+tools:
+  epochs: 40
+  steps_per_epoch: 4000
+  batch_size: 64
+  lr: 0.1
+  lr_drop_every: 5
+  lr_drop_factor: 0.1
+  momentum: 0.9
+  weight_decay: 0.0001
+  grad_clip_norm: 0.4
+  robust_extras: true
+  optimizer: sgd
+agent:
+  env_steps: 2000000
+  warmup_steps: 5000
+  replay_capacity: 500000
+  batch_episodes: 32
+  train_every: 4
+  target_sync_every: 10000
+  chunk_size: 25000
+  eval_pairs: 256
+  epsilon_end: 0.1
+  epsilon_anneal_steps: 1000000
+  lr: 1.0e-4
+  gamma: 0.99
+  use_double_dqn: false  # ABLATION: the ONLY change vs full.yaml (v2 used true)
+  grad_clip_norm: 5.0    # kept identical to v2 so the ablation isolates Double DQN
