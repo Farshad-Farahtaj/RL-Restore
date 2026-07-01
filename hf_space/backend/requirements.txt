@@ -1,0 +1,25 @@
+# RL-Restore demo backend — CPU-only runtime (HF Docker Space, Python 3.11).
+#
+# torch/torchvision are pinned to the versions the rlrestore package is locked
+# against (uv.lock: torch 2.12.0). Install the CPU wheels in the Dockerfile via
+#   pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
+# The backend itself imports only torch (not torchvision); torchvision is pinned
+# for the compatible pairing in case rlrestore grows a dependency on it.
+
+# Web framework
+fastapi==0.121.2
+uvicorn[standard]==0.41.0
+python-multipart==0.0.20
+anyio==4.12.0
+
+# Imaging / numerics (match repo: opencv-python-headless, numpy, pillow)
+pillow==12.2.0
+numpy==2.4.6
+opencv-python-headless==4.13.0.92
+
+# Deep learning (CPU wheels — see --extra-index-url note above)
+torch==2.12.0
+torchvision==0.27.0
+
+# The restoration math lives in the rlrestore package; install it alongside this
+# backend (the Dockerfile copies src/rlrestore + pyproject and `pip install .`).
