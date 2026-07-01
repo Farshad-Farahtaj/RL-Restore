@@ -1,0 +1,8 @@
+{
+  "small_tool@mps": 44.43,
+  "large_tool@mps": 14.49,
+  "small_tool@cpu": 3.29,
+  "large_tool@cpu": 1.27,
+  "small_tool_full_run_hours": 0.5,
+  "large_tool_full_run_hours": 1.53
+}
